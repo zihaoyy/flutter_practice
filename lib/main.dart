@@ -72,7 +72,7 @@ class Home extends StatelessWidget {
               UserAccountsDrawerHeader(
                 accountName: Text('Zihao',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                accountEmail: Text('zihao@adoi.cn',
+                accountEmail: Text('somebody@domain.com',
                     style: TextStyle(fontWeight: FontWeight.bold)),
                 currentAccountPicture: CircleAvatar(
                   backgroundImage: NetworkImage(
