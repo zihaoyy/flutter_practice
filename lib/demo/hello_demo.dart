@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Hello extends StatelessWidget {
+  const Hello({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Center(
+    return const Center(
       child: Text('hello',
           textDirection: TextDirection.ltr,
           style: TextStyle(

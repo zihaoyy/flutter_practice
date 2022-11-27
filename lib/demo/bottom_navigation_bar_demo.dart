@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BottomNavigationBarDemo extends StatefulWidget {
+  const BottomNavigationBarDemo({super.key});
+
   @override
   State<StatefulWidget> createState() => _BottomNavigationBarDemoState();
 }
@@ -21,7 +23,7 @@ class _BottomNavigationBarDemoState extends State<BottomNavigationBarDemo> {
       onTap: _onTapHandler,
       type: BottomNavigationBarType.fixed,
       fixedColor: Colors.black,
-      items: [
+      items: const [
         BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
         BottomNavigationBarItem(icon: Icon(Icons.history), label: 'History'),
         BottomNavigationBarItem(icon: Icon(Icons.list), label: 'List'),

@@ -1,31 +1,57 @@
+import 'dart:io';
+
+import 'package:demo/demo/form_demo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import './demo/listview_demo.dart';
 import './demo/bottom_navigation_bar_demo.dart';
+import './demo/basic_demo.dart';
+import './demo/layout_demo.dart';
+// import './demo/view_demo.dart';
+import './demo/sliver_demo.dart';
+import './demo/navigator_demo.dart';
+// import './demo/form_demo.dart';
 
-void main() => runApp(App());
+void main() {
+  if (Platform.isAndroid) {
+    // 设置android状态栏为透明的沉浸，在渲染之前MaterialApp组件会覆盖掉这个值。
+    SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent, //状态栏的颜色根据需要更改
+    );
+    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+  }
+  runApp(const App());
+}
 
 class App extends StatelessWidget {
+  const App({super.key});
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      // home: NavigatorDemo(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const Home(),
+        '/about': (context) => const NavigatePage(title: 'About'),
+        '/form': (context) => const FormDemo(),
+      },
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
-        highlightColor: Color.fromRGBO(255, 255, 255, 0.5),
-        splashColor: Colors.white70,
-      ),
+          primarySwatch: Colors.yellow,
+          highlightColor: const Color.fromRGBO(255, 255, 255, 0.5),
+          splashColor: Colors.white70),
     );
   }
 }
 
 class Home extends StatelessWidget {
+  const Home({super.key});
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 4,
         child: Scaffold(
           backgroundColor: Colors.grey[100],
           appBar: AppBar(
@@ -35,19 +61,19 @@ class Home extends StatelessWidget {
             //   onPressed: () => debugPrint('Navigation button is pressed.'),
             // ),
             centerTitle: true,
-            title: Text('测试'),
+            title: const Text('Test Title'),
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.search),
+                icon: const Icon(Icons.search),
                 tooltip: 'Search',
                 onPressed: () => debugPrint('Search button is pressed.'),
               )
             ],
-            systemOverlayStyle:
-                SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+            // systemOverlayStyle:
+            //     SystemUiOverlayStyle(statusBarColor: Colors.transparent),
             // SystemUiOverlayStyle.dark,
             elevation: 0.0,
-            bottom: TabBar(
+            bottom: const TabBar(
                 unselectedLabelColor: Colors.black38,
                 indicatorColor: Colors.black54,
                 indicatorSize: TabBarIndicatorSize.label,
@@ -56,13 +82,19 @@ class Home extends StatelessWidget {
                   Tab(icon: Icon(Icons.local_florist)),
                   Tab(icon: Icon(Icons.change_history)),
                   Tab(icon: Icon(Icons.directions_bike)),
+                  Tab(icon: Icon(Icons.view_quilt)),
                 ]),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
+              // Icon(Icons.local_florist, size: 128.0, color: Colors.black12),
               ListViewDemo(),
-              Icon(Icons.change_history, size: 128.0, color: Colors.black12),
-              Icon(Icons.directions_bike, size: 128.0, color: Colors.black12),
+              // Icon(Icons.change_history, size: 128.0, color: Colors.black12),
+              BasicDemo(),
+              // Icon(Icons.directions_bike, size: 128.0, color: Colors.black12),
+              LayoutDemo(),
+              // ViewDemo(),
+              SliverDemo(),
             ],
           ),
           drawer: Drawer(
@@ -70,18 +102,18 @@ class Home extends StatelessWidget {
             padding: EdgeInsets.zero,
             children: [
               UserAccountsDrawerHeader(
-                accountName: Text('Zihao',
+                accountName: const Text('Zihao',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                accountEmail: Text('somebody@domain.com',
+                accountEmail: const Text('somebody@domain.com',
                     style: TextStyle(fontWeight: FontWeight.bold)),
-                currentAccountPicture: CircleAvatar(
+                currentAccountPicture: const CircleAvatar(
                   backgroundImage: NetworkImage(
                       'https://avatars2.githubusercontent.com/u/29659965?s=460&v=4'),
                 ),
                 decoration: BoxDecoration(
                     color: Colors.yellow[400],
                     image: DecorationImage(
-                        image: NetworkImage(
+                        image: const NetworkImage(
                             'https://pic.netbian.com/uploads/allimg/200616/111937-1592277577d445.jpg'),
                         fit: BoxFit.cover,
                         colorFilter: ColorFilter.mode(
@@ -95,35 +127,35 @@ class Home extends StatelessWidget {
                   ),
                 ), */
               ListTile(
-                title: Text(
+                title: const Text(
                   'Messages',
                   textAlign: TextAlign.right,
                 ),
                 trailing:
-                    Icon(Icons.message, color: Colors.black12, size: 22.0),
+                    const Icon(Icons.message, color: Colors.black12, size: 22.0),
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Favorite',
                   textAlign: TextAlign.right,
                 ),
                 trailing:
-                    Icon(Icons.favorite, color: Colors.black12, size: 22.0),
+                    const Icon(Icons.favorite, color: Colors.black12, size: 22.0),
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
-                title: Text(
+                title: const Text(
                   'Settings',
                   textAlign: TextAlign.right,
                 ),
                 trailing:
-                    Icon(Icons.settings, color: Colors.black12, size: 22.0),
+                    const Icon(Icons.settings, color: Colors.black12, size: 22.0),
                 onTap: () => Navigator.pop(context),
               ),
             ],
           )),
-          bottomNavigationBar: BottomNavigationBarDemo(),
+          bottomNavigationBar: const BottomNavigationBarDemo(),
         ));
   }
 }
