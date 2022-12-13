@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:demo/demo/form_demo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/cupertino.dart';
 import './demo/listview_demo.dart';
 import './demo/bottom_navigation_bar_demo.dart';
 import './demo/basic_demo.dart';
@@ -11,6 +12,7 @@ import './demo/layout_demo.dart';
 import './demo/sliver_demo.dart';
 import './demo/navigator_demo.dart';
 // import './demo/form_demo.dart';
+import './demo/material_components.dart';
 
 void main() {
   if (Platform.isAndroid) {
@@ -36,17 +38,88 @@ class App extends StatelessWidget {
         '/': (context) => const Home(),
         '/about': (context) => const NavigatePage(title: 'About'),
         '/form': (context) => const FormDemo(),
+        '/mdc': (context) => const MaterialComponents(),
       },
       theme: ThemeData(
-          primarySwatch: Colors.yellow,
+          // brightness: Brightness.dark,
+          // primarySwatch: Colors.yellow,
           highlightColor: const Color.fromRGBO(255, 255, 255, 0.5),
           splashColor: Colors.white70),
     );
   }
 }
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<Home> {
+  void _showAlertDialog(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => CupertinoAlertDialog(
+        title: const Text('“摸鱼kik”想给您发送通知'),
+        content: const Text('“通知”可能包括提醒、声音和图标标记。这些可在“设置”中配置。'),
+        actions: <CupertinoDialogAction>[
+          CupertinoDialogAction(
+            isDefaultAction: false,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('不允许'),
+          ),
+          CupertinoDialogAction(
+            isDestructiveAction: false,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('允许'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showActionSheet(BuildContext context) {
+    showCupertinoModalPopup<void>(
+      context: context,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        title: const Text('标题'),
+        message: const Text('消息内容'),
+        actions: <CupertinoActionSheetAction>[
+          CupertinoActionSheetAction(
+            /// This parameter indicates the action would be a default
+            /// defualt behavior, turns the action's text to bold text.
+            isDefaultAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('默认'),
+          ),
+          CupertinoActionSheetAction(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('启用'),
+          ),
+          CupertinoActionSheetAction(
+            /// This parameter indicates the action would perform
+            /// a destructive action such as delete or exit and turns
+            /// the action's text color to red.
+            isDestructiveAction: true,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('取消'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +139,7 @@ class Home extends StatelessWidget {
               IconButton(
                 icon: const Icon(Icons.search),
                 tooltip: 'Search',
-                onPressed: () => debugPrint('Search button is pressed.'),
+                onPressed: () => _showAlertDialog(context),
               )
             ],
             // systemOverlayStyle:
@@ -131,8 +204,8 @@ class Home extends StatelessWidget {
                   'Messages',
                   textAlign: TextAlign.right,
                 ),
-                trailing:
-                    const Icon(Icons.message, color: Colors.black12, size: 22.0),
+                trailing: const Icon(Icons.message,
+                    color: Colors.black12, size: 22.0),
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
@@ -140,8 +213,8 @@ class Home extends StatelessWidget {
                   'Favorite',
                   textAlign: TextAlign.right,
                 ),
-                trailing:
-                    const Icon(Icons.favorite, color: Colors.black12, size: 22.0),
+                trailing: const Icon(Icons.favorite,
+                    color: Colors.black12, size: 22.0),
                 onTap: () => Navigator.pop(context),
               ),
               ListTile(
@@ -149,9 +222,9 @@ class Home extends StatelessWidget {
                   'Settings',
                   textAlign: TextAlign.right,
                 ),
-                trailing:
-                    const Icon(Icons.settings, color: Colors.black12, size: 22.0),
-                onTap: () => Navigator.pop(context),
+                trailing: const Icon(Icons.settings,
+                    color: Colors.black12, size: 22.0),
+                onTap: () => _showActionSheet(context),
               ),
             ],
           )),
